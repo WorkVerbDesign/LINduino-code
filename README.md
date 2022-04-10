@@ -1,6 +1,6 @@
 # LINduino-code
-Teensy 3.2 and ATTINY85 LIN bus accessories for the steering wheel project.
-Adding an 8 gate shifter now using an arduino pro mini (atmega328p)
+Teensy 3.2 (arduino) and ATTINY85 (digispark) LIN bus accessories for the steering wheel project.
+Adding an 8 gate shifter now using an Atmega328p (arduino pro mini).
 
 HI. This project is a stream project at twitch.tv/oh_bother. 
 This is a slap-dash implementation of the minimum possible LIN bus protocol in order to 
