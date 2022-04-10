@@ -11,11 +11,8 @@
  * park, netural, shift up and shift down. 
  * The shifter mixes plus and minus for "drive" so this decodes that
  * 
- * the 6 bit address has two parity bits that probably should be calculated
- * 0|011110|01|1
- * 
- * packet:
- * 0|R N D M P 0 0 0|1
+ * shifter buttons (2)
+ * Reverse Neutral Drive Shift- Shift+ 0 0 0 (blank)
  * 
  * to make a tiny85 full digispark high registers have to be set to 5d for full
  * pinout. pins with zener diodes just used as digital so compatible
@@ -23,15 +20,16 @@
  * the untuned timer of the tiny85 is a problem, it's 6 microseconds off!
  * which... is not usually a problem, this can be solved either with registers
  * or with timing functions
+ * this code would benefit from direct timer register manipulation
  */
 
 
 //-------------Settings----------------
 //device address
-const byte addy = 0x1E; // 0|011110|00|1
+const byte addy = 0xDD; // 0|101110|11|1    011101 29
 
 //timings
-#define UBITOFF -10 //us offset (3us for pin high/low write)was 8
+#define UBITOFF -8 //us offset (3us for pin high/low write)was 8
 #define BBITS 10 //how many bits to acknowledge break
 #define TURNWAIT 0 //miliseconds after bad addy or other fail(8 bit packet)
 #define HOFFSET 1 //half bit offset in number of right shifts (1 = 1/2, 2 = 1/4)
