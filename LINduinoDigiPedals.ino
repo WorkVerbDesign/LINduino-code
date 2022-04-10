@@ -7,18 +7,18 @@
  * https://www.csselectronics.com/screen/page/lin-bus-protocol-intro-basics/language/en
  * https://hackaday.com/2017/05/26/embed-with-elliot-lin-is-for-hackers/
  * 
- * The bmw steptronic shifter uses 12v high or low outputs to give
- * park, netural, shift up and shift down. 
- * The shifter mixes plus and minus for "drive" so this decodes that
+ * The pedals use an hx711 load cell driver for braking 
+ * constantly polled averaged by an array.
+ * other pins are just potentiometereres
  * 
- * the 6 bit address has two parity bits that probably should be calculated
- * 0|011110|01|1
- * 
- * packet:
- * 0|R N D M P 0 0 0|1
+ * The gas pedal takes 5v and creates a near 0-5v return from a capacative sensor
+ * the clutch uses a magnetometer tuned for a low to high transistion
  * 
  * to make a tiny85 full digispark high registers have to be set to 5d for full
  * pinout. pins with zener diodes just used as digital so compatible
+ * 
+ * pedal "buttons" bytes (8)
+ * gas(low) gas(high) clutch(low) clutch(high) brake(low) brake(mid) brake(high) (blank)
  *
  * The timings in the code need a lot of review, there are small delays for uart stabalization
  * 
@@ -27,8 +27,8 @@
  */
 
 //-------------Settings----------------
-//device address
-const byte addy = 0x5F; // 0|111101|01|1
+//device address (see main code for explanio)
+const byte addy = 0x5E; // 0|011110|10|1    011110 30
 
 //timings
 #define UBITOFF -8 //us offset (3us for pin high/low write)was 8
@@ -56,15 +56,15 @@ const byte addy = 0x5F; // 0|111101|01|1
 //#define SHOWPIN 5
 
 //-------Data storage array------------
-uint8_t data[7] = {0, 0, 0, 0, 0, 0, 0};
-const uint8_t dataSize = 7;
+uint8_t data[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+const uint8_t dataSize = 8;
 
 //------------Globals------------
 //timers, these are limited due to short usec timings
 unsigned long ubit = 50; //time a bit
 unsigned long hbit = 0; //half a bit
 unsigned long timeOut = 0;
-unsigned long timeSet =0;
+unsigned long timeSet = 0;
 
 //state machine
 uint8_t stater = 0;
