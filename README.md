@@ -15,3 +15,5 @@ This is a bit-banged bufferless moment by moment implementation of the LIN bus b
 there are much much better projects on github no less that do this better. 
 
 Anyway thanks for checking it out and I apologize if this code is seen as professional in any way at all whatsoever.
+
+In the next few weeks I'll figure out how to make a few folders here and describe the project better, maybe photos I have no idea. There are a bunch of 3d printed parts I should also host. Stay tuned.
